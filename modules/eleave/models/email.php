@@ -35,13 +35,17 @@ class Model extends \Kotchasan\Model
             // ส่งอีเมลไปยังผู้ทำรายการเสมอ
             $emails = array($mailto => $mailto.'<'.$name.'>');
             // อีเมลของมาชิกที่สามารถอนุมัติได้ทั้งหมด
+            $where = array(
+                array('U.permission', 'LIKE', '%,can_approve_eleave,%'),
+                array('U.active', 1),
+            );
+            if (self::$cfg->demo_mode) {
+                $where[] = array('U.social', 0);
+            }
             $query = static::createQuery()
                 ->select('U.username', 'U.name')
                 ->from('user U')
-                ->where(array(
-                    array('U.permission', 'LIKE', '%,can_approve_eleave,%'),
-                    array('U.active', 1),
-                ))
+                ->where($where)
                 ->cacheOn();
             foreach ($query->execute() as $item) {
                 $emails[$item->username] = $item->username.'<'.$item->name.'>';
