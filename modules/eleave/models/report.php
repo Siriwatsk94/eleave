@@ -50,7 +50,8 @@ class Model extends \Kotchasan\Model
         }
 
         return static::createQuery()
-            ->select('F.id', 'F.create_date', 'U.name', 'F.leave_id', 'F.start_date', 'F.days', 'F.start_period', 'F.end_date', 'F.end_period', 'F.member_id')
+            ->select('F.id', 'F.create_date', 'U.name', 'F.leave_id', 'F.start_date',
+                'F.days', 'F.start_period', 'F.end_date', 'F.end_period', 'F.member_id', 'F.reason')
             ->from('leave_items F')
             ->join('user U', 'LEFT', array('U.id', 'F.member_id'))
             ->where($where);
@@ -76,15 +77,16 @@ class Model extends \Kotchasan\Model
                     if ($index) {
                         $ret['modal'] = Language::trans(createClass('Eleave\View\View')->render($index));
                     }
-                } elseif ($action == 'delete') {
-                    // รายการของตัวเองที่ยังไม่ได้อนุมัติ
+                } elseif ($action == 'delete' && Login::checkPermission($login, 'can_approve_eleave')) {
+                    // ลบรายการที่ยังไม่ได้อนุมัติ
+                    $where = array(
+                        array('id', $match[1]),
+                        array('status', '!=', 1),
+                    );
                     $query = $this->db()->createQuery()
                         ->select('id')
                         ->from('leave_items')
-                        ->where(array(
-                            array('id', $match[1]),
-                            array('status', '!=', 1),
-                        ));
+                        ->where($where);
                     $ids = array();
                     foreach ($query->execute() as $item) {
                         $ids[] = $item->id;

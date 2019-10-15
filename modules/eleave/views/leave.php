@@ -60,7 +60,7 @@ class View extends \Gcms\View
             'class' => 'subitem message',
         ));
         $category = \Eleave\Category\Model::init();
-        foreach (Language::get('ELEAVE_CATEGORIES') as $k => $label) {
+        foreach ($category->items() as $k => $label) {
             $fieldset->add('select', array(
                 'id' => $k,
                 'labelClass' => 'g-input icon-valid',

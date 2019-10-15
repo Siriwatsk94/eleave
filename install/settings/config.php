@@ -3,7 +3,7 @@
 /* config.php */
 
 return array(
-    'version' => '2.0.7',
+    'version' => '2.0.8',
     'web_title' => 'eLeave',
     'web_description' => 'ระบบลาออนไลน์',
     'timezone' => 'Asia/Bangkok',
@@ -25,5 +25,5 @@ return array(
         3 => 'pdf',
     ),
     'eleave_upload_size' => 2097152,
-    'eleave_fiscal_year' => 'Y-10-1',
+    'eleave_fiscal_year' => 'Y-10-01',
 );

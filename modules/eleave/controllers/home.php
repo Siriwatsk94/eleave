@@ -35,6 +35,7 @@ class Controller extends \Kotchasan\KBase
         $leave_status = Language::get('LEAVE_STATUS');
         $datas = \Eleave\Home\Model::get($login);
         if (Login::checkPermission($login, 'can_approve_eleave')) {
+            // สามารถอนุมัติได้
             $url = 'index.php?module=eleave-report&amp;status=';
         } else {
             $url = 'index.php?module=eleave&amp;status=';

@@ -60,7 +60,7 @@ class View extends \Gcms\View
             'class' => 'subitem message',
         ));
         $category = \Eleave\Category\Model::init();
-        foreach (Language::get('ELEAVE_CATEGORIES') as $k => $label) {
+        foreach ($category->items() as $k => $label) {
             $fieldset->add('select', array(
                 'id' => $k,
                 'labelClass' => 'g-input icon-valid',
@@ -146,6 +146,15 @@ class View extends \Gcms\View
             'label' => '{LNG_Status}',
             'options' => Language::get('LEAVE_STATUS'),
             'value' => $index->status,
+        ));
+        // reason
+        $fieldset->add('text', array(
+            'id' => 'reason',
+            'labelClass' => 'g-input icon-comments',
+            'itemClass' => 'item',
+            'label' => '{LNG_Reason}',
+            'maxlength' => 255,
+            'value' => $index->reason,
         ));
         $fieldset = $form->add('fieldset', array(
             'class' => 'submit',

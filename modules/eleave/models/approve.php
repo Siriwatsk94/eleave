@@ -42,7 +42,7 @@ class Model extends \Kotchasan\Model
     }
 
     /**
-     * บันทึกข้อมูลที่ส่งมาจากฟอร์ม approve.php.
+     * บันทึกข้อมูลที่ส่งมาจากฟอร์ม (approve.php)
      *
      * @param Request $request
      */
@@ -58,6 +58,7 @@ class Model extends \Kotchasan\Model
                 'detail' => $request->post('detail')->textarea(),
                 'communication' => $request->post('communication')->textarea(),
                 'status' => $request->post('status')->toInt(),
+                'reason' => $request->post('reason')->topic(),
             );
             // ตรวจสอบรายการที่เลือก
             $index = self::get($request->post('id')->toInt());
@@ -114,10 +115,10 @@ class Model extends \Kotchasan\Model
                         $save['leave_type'] = $index->leave_type;
                         $save['name'] = $index->name;
                         $save['id'] = $index->id;
-                        // ส่งอีเมล์แจ้งการขอลา
+                        // ส่งอีเมลแจ้งการขอลา
                         $ret['alert'] = \Eleave\Email\Model::send($index->username, $save['name'], $save);
                     } else {
-                        // ไม่ต้องส่งอีเมล์
+                        // ไม่ต้องส่งอีเมล
                         $ret['alert'] = Language::get('Saved successfully');
                     }
                     $ret['location'] = $request->getUri()->postBack('index.php', array('module' => 'eleave-report', 'status' => $save['status']));

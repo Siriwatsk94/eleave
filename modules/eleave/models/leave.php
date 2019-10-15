@@ -100,7 +100,7 @@ class Model extends \Kotchasan\Model
     }
 
     /**
-     * บันทึกข้อมูลที่ส่งมาจากฟอร์ม leave.php.
+     * บันทึกข้อมูลที่ส่งมาจากฟอร์ม (leave.php)
      *
      * @param Request $request
      */
@@ -127,6 +127,10 @@ class Model extends \Kotchasan\Model
                 $end_date = $request->post('end_date')->date();
                 $start_period = $request->post('start_period')->toInt();
                 $end_period = $request->post('end_period')->toInt();
+                if ($save['detail'] == '') {
+                    // ไม่ได้กรอก detail
+                    $ret['ret_detail'] = 'Please fill in';
+                }
                 if ($end_date == '') {
                     // ไม่ได้กรอกวันที่สิ้นสุดมา ใช้วันที่เดียวกันกับวันที่เริ่มต้น (ลา 1 วัน)
                     $end_date = $start_date;
@@ -140,7 +144,10 @@ class Model extends \Kotchasan\Model
                     // ถ้าลาหลายวัน ไม่สามารถเลือกตัวเลือก ครึ่งวันเช้าได้
                     $ret['ret_start_period'] = Language::get('Cannot select this option');
                 } else {
-                    if ($start_date == $end_date) {
+                    if ($end_date < $start_date) {
+                        // วันที่สิ้นสุด น้อยกว่าวันที่เริ่มต้น
+                        $ret['ret_end_date'] = Language::get('End date must be greater than or equal to the start date');
+                    } elseif ($start_date == $end_date) {
                         // ลาภายใน 1 วัน ใช้จำนวนวันลาจาก คาบการลา
                         $save['days'] = self::$cfg->eleave_periods[$start_period];
                     } else {
@@ -152,24 +159,16 @@ class Model extends \Kotchasan\Model
                     $save['start_period'] = $start_period;
                     $save['end_period'] = $end_period;
                 }
-                if ($end_date < $start_date) {
-                    // วันที่สิ้นสุด น้อยกว่าวันที่เริ่มต้น
-                    $ret['ret_end_date'] = Language::get('End date must be greater than or equal to the start date');
-                }
-                if ($save['detail'] == '') {
-                    // ไม่ได้กรอก detail
-                    $ret['ret_detail'] = 'Please fill in';
-                }
-                // table
-                $table = $this->getTableName('leave_items');
-                // Database
-                $db = $this->db();
-                if ($index->id == 0) {
-                    $save['id'] = $db->getNextId($table);
-                } else {
-                    $save['id'] = $index->id;
-                }
                 if (empty($ret)) {
+                    // table
+                    $table = $this->getTableName('leave_items');
+                    // Database
+                    $db = $this->db();
+                    if ($index->id == 0) {
+                        $save['id'] = $db->getNextId($table);
+                    } else {
+                        $save['id'] = $index->id;
+                    }
                     // อัปโหลดไฟล์แนบ
                     \Download\Upload\Model::execute($ret, $request, $save['id'], 'eleave', self::$cfg->eleave_file_typies, self::$cfg->eleave_upload_size);
                 }
@@ -189,10 +188,10 @@ class Model extends \Kotchasan\Model
                         // ประเภทลา
                         $save['leave_type'] = self::leaveType($save['leave_id']);
                         $save['name'] = $index->name;
-                        // ส่งอีเมล์แจ้งการขอลา
+                        // ส่งอีเมลแจ้งการขอลา
                         $ret['alert'] = \Eleave\Email\Model::send($login['username'], $save['name'], $save);
                     } else {
-                        // ไม่ต้องส่งอีเมล์
+                        // ไม่ต้องส่งอีเมล
                         $ret['alert'] = Language::get('Saved successfully');
                     }
                     $ret['location'] = $request->getUri()->postBack('index.php', array('module' => 'eleave', 'status' => $save['status']));

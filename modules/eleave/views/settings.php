@@ -48,7 +48,7 @@ class View extends \Gcms\View
             'labelClass' => 'g-input icon-calendar',
             'itemClass' => 'item',
             'label' => '{LNG_Fiscal year}',
-            'comment' => '{LNG_Determine the starting date of the calendar year, such as Y-10-1 (1 Oct according to the fiscal year) or Y-1-1 (1 January according to the calendar year)}',
+            'comment' => '{LNG_Determine the starting date of the calendar year, such as Y-10-01 (1 Oct according to the fiscal year) or Y-01-01 (1 January according to the calendar year)}',
             'value' => isset(self::$cfg->eleave_fiscal_year) ? self::$cfg->eleave_fiscal_year : 'Y-1-1',
         ));
         $fieldset = $form->add('fieldset', array(

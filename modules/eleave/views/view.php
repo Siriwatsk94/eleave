@@ -38,8 +38,8 @@ class View extends \Gcms\View
         $content .= '<tr><td class="item"><span class="icon-customer">{LNG_Name}</span></td><td class="item">:</td><td class="item">'.$index['name'].'</td></tr>';
         $content .= '<tr><td class="item"><span class="icon-verfied">{LNG_Leave type}</span></td><td class="item">:</td><td class="item">'.$index['leave_type'].'</td></tr>';
         $category = \Eleave\Category\Model::init();
-        foreach (Language::get('ELEAVE_CATEGORIES') as $k => $label) {
-            $content .= '<tr><td class="item"><span class="icon-valid">'.$label.'</span></td><td class="item">:</td><td class="item">'.$category->get($k, $index[$k]).'</td></tr>';
+        foreach ($category->items() as $k => $label) {
+            $content .= '<tr><td class="item"><span class="icon-category">'.$label.'</span></td><td class="item">:</td><td class="item">'.$category->get($k, $index[$k]).'</td></tr>';
         }
         $content .= '<tr><td class="item"><span class="icon-file">{LNG_Detail}/{LNG_Reasons for leave}</span></td><td class="item">:</td><td class="item">'.nl2br($index['detail']).'</td></tr>';
         $content .= '<tr><td class="item"><span class="icon-calendar">{LNG_Date}</span></td><td class="item">:</td><td class="item">';
@@ -53,6 +53,7 @@ class View extends \Gcms\View
         $content .= '<tr><td class="item"><span class="icon-event">{LNG_Number of leave days}</span></td><td class="item">:</td><td class="item">'.$index['days'].' {LNG_days}</td></tr>';
         $content .= '<tr><td class="item"><span class="icon-file">{LNG_Communication}</span></td><td class="item">:</td><td class="item">'.nl2br($index['communication']).'</td></tr>';
         $content .= '<tr><td class="item"><span class="icon-star0">{LNG_Status}</span></td><td class="item">:</td><td class="item"><mark class="term'.$index['status'].'">'.Language::find('LEAVE_STATUS', '', $index['status']).'</mark></td></tr>';
+        $content .= '<tr><td class="item"><span class="icon-comments">{LNG_Reason}</span></td><td class="item">:</td><td class="item">'.$index['reason'].'</td></tr>';
         $content .= '<tr><td class="item"><span class="icon-download">{LNG_Attached file}</span></td><td class="item">:</td><td class="item">'.\Download\Index\Controller::init($index['id'], 'eleave', self::$cfg->eleave_file_typies).'</td></tr>';
         $content .= '</table>';
         $content .= '</article>';

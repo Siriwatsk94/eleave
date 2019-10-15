@@ -130,6 +130,9 @@ class View extends \Gcms\View
                     'text' => '{LNG_days}',
                     'class' => 'center',
                 ),
+                'reason' => array(
+                    'text' => '{LNG_Reason}',
+                ),
             ),
             /* รูปแบบการแสดงผลของคอลัมน์ (tbody) */
             'cols' => array(

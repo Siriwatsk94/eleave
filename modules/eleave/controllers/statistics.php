@@ -42,7 +42,7 @@ class Controller extends \Gcms\Controller
         // ค่าที่ส่งมา
         $params = array(
             'from' => $request->request('from', $from)->date(),
-            'to' => $request->request('to', date('Y-m-d', strtotime("+12 months -1 day $from")))->date(),
+            'to' => $request->request('to', date('Y-m-d', strtotime('+12 months -1 day '.$from)))->date(),
         );
         // สามารถอนุมัติได้
         if (Login::checkPermission($login, 'can_approve_eleave')) {

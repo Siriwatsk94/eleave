@@ -87,6 +87,7 @@ CREATE TABLE `{prefix}_leave_items` (
   `status` tinyint(1) NOT NULL,
   `department` int(11) NOT NULL,
   `detail` text COLLATE utf8_unicode_ci NOT NULL,
+  `reason` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `communication` text COLLATE utf8_unicode_ci NOT NULL,
   `days` float NOT NULL,
   `start_date` date NOT NULL,
@@ -199,4 +200,3 @@ ALTER TABLE `{prefix}_leave`
 --
 ALTER TABLE `{prefix}_leave_items`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-

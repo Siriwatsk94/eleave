@@ -51,7 +51,7 @@ class Model extends \Kotchasan\Model
                 $emails[$item->username] = $item->username.'<'.$item->name.'>';
             }
             // ส่งอีเมล
-            $subject = '['.self::$cfg->web_title.'] '.Language::trans('{LNG_Request for leave}');
+            $subject = '['.self::$cfg->web_title.'] '.Language::get('Request for leave').' '.Language::find('LEAVE_STATUS', '', $order['status']);
             $msg = Language::trans(createClass('Eleave\View\View')->render($order));
             $err = \Kotchasan\Email::send(implode(',', $emails), self::$cfg->noreply_email, $subject, $msg);
             if ($err->error()) {

@@ -131,6 +131,9 @@ class View extends \Gcms\View
                     'text' => '{LNG_days}',
                     'class' => 'center',
                 ),
+                'reason' => array(
+                    'text' => '{LNG_Reason}',
+                ),
             ),
             /* รูปแบบการแสดงผลของคอลัมน์ (tbody) */
             'cols' => array(
@@ -193,6 +196,6 @@ class View extends \Gcms\View
      */
     public function onCreateFooter()
     {
-        return '<tr><td class=right colspan=5>{LNG_Total}</td><td class=center>'.$this->days.'</td><td></td></tr>';
+        return '<tr><td class=right colspan=5>{LNG_Total}</td><td class=center>'.$this->days.'</td><td colspan="2"></td></tr>';
     }
 }

@@ -46,7 +46,7 @@ class Controller extends \Gcms\Controller
                 $mime = Mime::get($match[3]);
                 $_SESSION[$uid] = array(
                     'file' => $item,
-                    'mime' => $mime === null ? 'application/octet-stream' : $mime,
+                    'mime' => $mime === null || !in_array($match[3], array('pdf', 'png', 'gif', 'jpg', 'jpeg')) ? 'application/octet-stream' : $mime,
                     'owner_id' => $owner_id,
                 );
                 $img = WEB_URL.'skin/ext/'.(is_file(ROOT_PATH.'skin/ext/'.$match[3].'.png') ? $match[3] : 'file').'.png';

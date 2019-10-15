@@ -66,7 +66,7 @@ class Controller extends \Kotchasan\KBase
                 'text' => '{LNG_List of} {LNG_Leave type}',
                 'url' => 'index.php?module=eleave-setup',
             );
-            foreach (Language::get('ELEAVE_CATEGORIES') as $type => $label) {
+            foreach (Language::get('ELEAVE_CATEGORIES', array()) as $type => $label) {
                 $submenus[] = array(
                     'text' => $label,
                     'url' => 'index.php?module=eleave-categories&amp;type='.$type,
