@@ -121,7 +121,7 @@ class Model extends \Kotchasan\Model
                         // ไม่ต้องส่งอีเมล
                         $ret['alert'] = Language::get('Saved successfully');
                     }
-                    $ret['location'] = $request->getUri()->postBack('index.php', array('module' => 'eleave-report', 'status' => $save['status']));
+                    $ret['location'] = $request->getUri()->postBack('index.php', array('module' => 'eleave-report', 'status' => $index->status));
                     // เคลียร์
                     $request->removeToken();
                 }

@@ -3,7 +3,7 @@
 /* config.php */
 
 return array(
-    'version' => '2.0.8',
+    'version' => '2.1.0',
     'web_title' => 'eLeave',
     'web_description' => 'ระบบลาออนไลน์',
     'timezone' => 'Asia/Bangkok',

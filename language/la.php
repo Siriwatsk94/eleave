@@ -63,7 +63,7 @@ return array(
   'Description' => 'ຄຳອະທິບາຍ',
   'Detail' => 'ລາຍະລະອຽດ',
   'Details of' => 'ລາຍລະອຽດຂອງ',
-  'Determine the starting date of the calendar year, such as Y-10-1 (1 Oct according to the fiscal year) or Y-1-1 (1 January according to the calendar year)' => 'ກຳ ນົດວັນທີເລີ່ມຕົ້ນຂອງປີຕາມປະຕິທິນເຊັ່ນ: Y-10-1 (1 ຕຸລາຕາມປີງົບປະມານ) ຫຼື Y-1-1 (1 ມັງກອນຕາມປີປະຕິທິນ)',
+  'Determine the starting date of the calendar year, such as Y-10-01 (1 Oct according to the fiscal year) or Y-01-01 (1 January according to the calendar year)' => 'ກຳ ນົດວັນທີເລີ່ມຕົ້ນຂອງປີຕາມປະຕິທິນເຊັ່ນ: Y-10-01 (1 ຕຸລາຕາມປີງົບປະມານ) ຫຼື Y-01-01 (1 ມັງກອນຕາມປີປະຕິທິນ)',
   'Document' => 'ເອກະສານ',
   'Document No.' => 'ເລກທີເອກະສານ',
   'Document number' => 'ເລກທີເອກະສານ',

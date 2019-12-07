@@ -63,7 +63,7 @@ return array(
   'Description' => 'คำอธิบาย',
   'Detail' => 'รายละเอียด',
   'Details of' => 'รายละเอียดของ',
-  'Determine the starting date of the calendar year, such as Y-10-1 (1 Oct according to the fiscal year) or Y-1-1 (1 January according to the calendar year)' => 'กำหนดวันที่เริ่มต้นของปีปฏิทินลา เช่น Y-10-1 (1 ตค. ตามปีงบประมาณ) หรือ Y-1-1 (1 มค. ตามปีปฏิทิน)',
+  'Determine the starting date of the calendar year, such as Y-10-01 (1 Oct according to the fiscal year) or Y-01-01 (1 January according to the calendar year)' => 'กำหนดวันที่เริ่มต้นของปีปฏิทินลา เช่น Y-10-01 (1 ตค. ตามปีงบประมาณ) หรือ Y-01-01 (1 มค. ตามปีปฏิทิน)',
   'Document' => 'เอกสาร',
   'Document No.' => 'เลขที่เอกสาร',
   'Document number' => 'เลขที่เอกสาร',
