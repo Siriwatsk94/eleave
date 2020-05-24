@@ -148,7 +148,8 @@ return array(
   'Mail server settings' => 'ຄ່າກຳນົດຂອງເມວເຊີບເວີ',
   'MAIL_PROGRAMS' => array(
     0 => 'ສົ່ງຈົດໝາຍດ້ວຍ PHP',
-    1 => 'ສົ່ງຈົດໝາຍດ້ວຍ PHPMailer (ແນະນຳ)'
+    1 => 'ສົ່ງຈົດໝາຍດ້ວຍ PHPMailer+SMTP (ແນະນຳ)',
+    2 => 'ສົ່ງຈົດໝາຍດ້ວຍ PHPMailer+PHP Mail'
   ),
   'Manage languages' => 'ຈັດການພາສາ',
   'Member list' => 'ລາຍຊື່ສະມາຊິກ',

@@ -61,6 +61,8 @@ class Controller extends \Gcms\Controller
             $section->add('header', array(
                 'innerHTML' => '<h2 class="icon-report">'.$this->title.'</h2>',
             ));
+            // menu
+            $section->appendChild(\Index\Tabmenus\View::render($request, 'report', 'eleave'));
             // ตาราง
             $section->appendChild(createClass('Eleave\Report\View')->render($request, $index));
             // คืนค่า HTML

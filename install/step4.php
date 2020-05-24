@@ -1,12 +1,11 @@
 <?php
-
 if (defined('ROOT_PATH')) {
     // ค่าที่ส่งมา
     $_SESSION['db_username'] = $_POST['db_username'];
     $_SESSION['db_password'] = $_POST['db_password'];
     $_SESSION['db_server'] = $_POST['db_server'];
-    $_SESSION['db_name'] = $_POST['db_name'];
-    $_SESSION['prefix'] = $_POST['prefix'];
+    $_SESSION['db_name'] = preg_replace('/[^a-z0-9_]+/', '', $_POST['db_name']);
+    $_SESSION['prefix'] = preg_replace('/[^a-z0-9_]+/', '', $_POST['prefix']);
     $content = array();
     $error = false;
     try {
@@ -14,17 +13,23 @@ if (defined('ROOT_PATH')) {
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
         );
-        $conn = new \PDO('mysql:host='.$_SESSION['db_server'].';dbname='.$_SESSION['db_name'], $_SESSION['db_username'], $_SESSION['db_password'], $options);
+        $conn = new \PDO('mysql:host='.$_SESSION['db_server'].';dbname=INFORMATION_SCHEMA', $_SESSION['db_username'], $_SESSION['db_password'], $options);
         $conn->query("SET SESSION sql_mode = ''");
+        $result_id = $conn->query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME="'.$_SESSION['db_name'].'"');
+        $result = $result_id->fetchAll(\PDO::FETCH_ASSOC);
+        if (empty($result)) {
+            $conn->query('CREATE DATABASE '.$_SESSION['db_name'].' CHARACTER SET utf8');
+        }
+        $conn->query('USE '.$_SESSION['db_name']);
     } catch (\PDOException $e) {
         $error = true;
         echo '<h2>ความผิดพลาดในการเชื่อมต่อกับฐานข้อมูล</h2>';
-        echo '<p class=warning>ไม่สามารถเชื่อมต่อกับฐานข้อมูลของคุณได้ในขณะนี้</p>';
+        echo '<p class=warning>'.$e->getMessage().'</p>';
         echo '<p>อาจเป็นไปได้ว่า</p>';
         echo '<ol>';
         echo '<li>เซิร์ฟเวอร์ของฐานข้อมูลของคุณไม่สามารถใช้งานได้ในขณะนี้</li>';
         echo '<li>ไม่มีฐานข้อมูลที่ต้องการติดตั้ง กรุณาสร้างฐานข้อมูลก่อน หรือใช้ฐานข้อมูลที่มีอยู่แล้ว</li>';
-        echo '<li>'.$e->getMessage().'</li>';
+        echo '<li>ข้อมูลต่างๆที่กรอกไม่ถูกต้อง กรุณากลับไปตรวจสอบ</li>';
         echo '</ol>';
         echo '<p>หากคุณไม่สามารถดำเนินการแก้ไขข้อผิดพลาดด้วยตัวของคุณเองได้ ให้ติดต่อผู้ดูแลระบบเพื่อขอข้อมูลที่ถูกต้อง</p>';
         echo '<p><a href="index.php?step=2" class="button large pink">กลับไปลองใหม่</a></p>';
@@ -39,6 +44,9 @@ if (defined('ROOT_PATH')) {
         foreach ($lines as $line) {
             $line = trim($line);
             if ($line && !startsWith($line, '--')) {
+                if (preg_match('/CREATE TABLE `\{prefix\}_([a-z_\-]+)`/i', $line, $match)) {
+                    $commands .= 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].'_'.$match[1]."`;\n";
+                }
                 $commands .= $line."\n";
             }
         }
@@ -62,9 +70,9 @@ if (defined('ROOT_PATH')) {
             $salt2 = uniqid();
             $username = $_SESSION['username'];
             $password = $_SESSION['password'];
-            $sql = "INSERT INTO `".$_SESSION['prefix']."_user` (`id`, `username`, `salt`, `password`, `token`, `status`, `permission`, `name`, `sex`, `address`, `phone`, `provinceID`, `zipcode`, `visited`, `lastvisited`, `session_id`, `ip`, `create_date`, `active`, `social`) VALUES";
-            $sql .= "(1, '".$username."', '".$salt1."', '".sha1($password_key.$password.$salt1)."', NULL, 1, '', 'แอดมิน', 'm', '', '', '', '', 0, 0, '', '::1', NOW(), 1, 0),";
-            $sql .= "(2, 'demo@localhost', '".$salt2."', '".sha1($password_key.'demo'.$salt2)."', NULL, 0, '', 'ตัวอย่าง', 'f', '', '', '', '', 0, 0, '', '::1', NOW(), 1, 0);";
+            $sql = "INSERT INTO `".$_SESSION['prefix']."_user` (`id`, `username`, `salt`, `password`, `token`, `status`, `permission`, `name`, `create_date`) VALUES";
+            $sql .= "(1, '".$username."', '".$salt1."', '".sha1($password_key.$password.$salt1)."', NULL, 1, '', 'แอดมิน', NOW()),";
+            $sql .= "(2, 'demo@localhost', '".$salt2."', '".sha1($password_key.'demo'.$salt2)."', NULL, 0, '', 'ตัวอย่าง', NOW());";
             $conn->query($sql);
             // บันทึก settings/database.php
             $database_cfg = include 'settings/database.php';

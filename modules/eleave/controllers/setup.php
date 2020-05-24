@@ -54,6 +54,8 @@ class Controller extends \Gcms\Controller
             $section->add('header', array(
                 'innerHTML' => '<h2 class="icon-list">'.$this->title.'</h2>',
             ));
+            // menu
+            $section->appendChild(\Index\Tabmenus\View::render($request, 'settings', 'eleave'));
             // ตาราง
             $section->appendChild(createClass('Eleave\Setup\View')->render($request));
             // คืนค่า HTML

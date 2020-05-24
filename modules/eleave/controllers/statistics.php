@@ -45,7 +45,8 @@ class Controller extends \Gcms\Controller
             'to' => $request->request('to', date('Y-m-d', strtotime('+12 months -1 day '.$from)))->date(),
         );
         // สามารถอนุมัติได้
-        if (Login::checkPermission($login, 'can_approve_eleave')) {
+        $can_approve_eleave = Login::checkPermission($login, 'can_approve_eleave');
+        if ($can_approve_eleave) {
             $params['member_id'] = $request->request('id', $login['id'])->toInt();
         } else {
             $params['member_id'] = $login['id'];
@@ -74,6 +75,10 @@ class Controller extends \Gcms\Controller
             $section->add('header', array(
                 'innerHTML' => '<h2 class="icon-stats">'.$this->title.'</h2>',
             ));
+            if ($can_approve_eleave) {
+                // menu
+                $section->appendChild(\Index\Tabmenus\View::render($request, 'report', 'eleave'));
+            }
             // ตาราง
             $section->appendChild(createClass('Eleave\Statistics\View')->render($request, $params));
             // คืนค่า HTML
