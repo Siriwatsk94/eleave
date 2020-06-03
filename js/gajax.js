@@ -283,7 +283,7 @@ window.$K = (function() {
     };
   }
   window.floatval = function(val) {
-    var n = parseFloat(typeof val == 'string' ? val.replace(',', '') : val);
+    var n = parseFloat(typeof val == 'string' ? val.replace(/[^0-9\-\.]/g, '') : val);
     return isNaN(n) ? 0 : n;
   };
   window.toCurrency = function(val) {
@@ -1130,23 +1130,25 @@ window.$K = (function() {
       return false;
     },
     addClass: function(v) {
-      if (!v) {
-        this.className = "";
-      } else {
-        var rm = v.split(" ");
-        var cs = [];
-        forEach(this.className.split(" "), function(c) {
-          if (c !== "" && rm.indexOf(c) == -1) {
-            cs.push(c);
-          }
-        });
-        cs.push(v);
-        this.className = cs.join(" ");
+      if (this.className) {
+        if (!v) {
+          this.className = "";
+        } else {
+          var rm = v.split(" "),
+            cs = [];
+          forEach(this.className.split(" "), function(c) {
+            if (c !== "" && rm.indexOf(c) == -1) {
+              cs.push(c);
+            }
+          });
+          cs.push(v);
+          this.className = cs.join(" ");
+        }
       }
       return this;
     },
     removeClass: function(v) {
-      if (!Object.isNull(this.className)) {
+      if (this.className) {
         var rm = v.split(" ");
         var cs = [];
         forEach(this.className.split(" "), function(c) {
@@ -1159,7 +1161,7 @@ window.$K = (function() {
       return this;
     },
     replaceClass: function(source, replace) {
-      if (!Object.isNull(this.className)) {
+      if (this.className) {
         var rm = (replace + " " + source).split(" ");
         var cs = [];
         forEach(this.className.split(" "), function(c) {
@@ -3269,7 +3271,9 @@ window.$K = (function() {
       this.placeholder.style.display =
         this.hidden_value == "" ? "block" : "none";
       this.hidden.value = this.hidden_value;
-      this.hidden.callEvent("change");
+      if (this.hidden.callEvent) {
+        this.hidden.callEvent("change");
+      }
     },
     _toogle: function(e) {
       if (this.calendar.style.display == "block") {

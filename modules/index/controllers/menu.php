@@ -94,12 +94,16 @@ class Controller
      * @param string|null $url      ถ้าไมได้ระบุ (null) เป็นเมนุเปล่าหรือเมนูที่มีเมนูย่อย
      * @param array|null  $submenus ถ้าไมได้ระบุ (null) จะไม่มีเมนูย่อย
      * @param string|null $before   เพิ่มเมนูลงในตำแหน่งก่อนหน้าเมนูที่เลือก ถ้าไม่พบหรือไม่ได้ระบุ (null) จะเพิ่มไปรายการสุดท้าย
+     * @param string $target target ของลิงค์ (ถ้าระบุ $url)
      */
-    public function addTopLvlMenu($toplvl, $text, $url = null, $submenus = null, $before = null)
+    public function addTopLvlMenu($toplvl, $text, $url = null, $submenus = null, $before = null, $target = null)
     {
         $menu = array('text' => $text);
         if (!empty($url)) {
             $menu['url'] = $url;
+        }
+        if (!empty($target)) {
+            $menu['target'] = $target;
         }
         if (!empty($submenus)) {
             $menu['submenus'] = $submenus;

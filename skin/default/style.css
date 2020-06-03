@@ -97,6 +97,7 @@ a:hover {
 .language-menu::before {
   content: attr(data-text);
   text-transform: uppercase;
+  font-family: inherit;
 }
 .language-menu:hover ul {
   height: auto;
@@ -495,7 +496,7 @@ td.icons a.icon-minus:before {
   min-width: 9.875em;
 }
 .setup_frm .tab_menus>li {
-  min-width: 9.688em;
+  min-width: 9.666em;
 }
 .tab_menus>li:not(:last-child) {
   margin-right: 2px;
