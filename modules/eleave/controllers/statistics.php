@@ -37,7 +37,7 @@ class Controller extends \Gcms\Controller
         $login = Login::isMember();
         $from = date(self::$cfg->eleave_fiscal_year);
         if ($from > date('Y-m-d')) {
-            $from = date('Y-m-d', strtotime("-1 year $from"));
+            $from = date('Y-m-d', strtotime('-1 year '.$from));
         }
         // ค่าที่ส่งมา
         $params = array(

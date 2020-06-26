@@ -39,10 +39,11 @@ class View extends \Gcms\View
      *
      * @param Request $request
      * @param object $index
+     * @param array $login
      *
      * @return string
      */
-    public function render(Request $request, $index)
+    public function render(Request $request, $index, $login)
     {
         // ค่าที่ส่งมา
         $params = array(
@@ -154,9 +155,9 @@ class View extends \Gcms\View
                     'text' => '{LNG_Detail}',
                 ),
                 'edit' => array(
-                    'class' => 'icon-edit button green',
+                    'class' => 'icon-valid button green',
                     'href' => $uri->createBackUri(array('module' => 'eleave-approve', 'id' => ':id')),
-                    'text' => '{LNG_Edit}',
+                    'text' => '{LNG_Approve}',
                 ),
             ),
         ));
@@ -169,7 +170,7 @@ class View extends \Gcms\View
     }
 
     /**
-     * จัดรูปแบบการแสดงผลในแต่ละแถว.
+     * จัดรูปแบบการแสดงผลในแต่ละแถว
      *
      * @param array $item
      *

@@ -1273,6 +1273,7 @@ html .button:before,
   clear: both;
   margin: 9px 0 -1px 0;
   text-align: center;
+  position: relative;
 }
 .splitpage a,
 .splitpage strong {

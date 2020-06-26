@@ -1130,7 +1130,7 @@ window.$K = (function() {
       return false;
     },
     addClass: function(v) {
-      if (this.className) {
+      if (this.className || this.className === '') {
         if (!v) {
           this.className = "";
         } else {
@@ -1148,7 +1148,7 @@ window.$K = (function() {
       return this;
     },
     removeClass: function(v) {
-      if (this.className) {
+      if (this.className || this.className === '') {
         var rm = v.split(" ");
         var cs = [];
         forEach(this.className.split(" "), function(c) {
@@ -1161,7 +1161,7 @@ window.$K = (function() {
       return this;
     },
     replaceClass: function(source, replace) {
-      if (this.className) {
+      if (this.className || this.className === '') {
         var rm = (replace + " " + source).split(" ");
         var cs = [];
         forEach(this.className.split(" "), function(c) {

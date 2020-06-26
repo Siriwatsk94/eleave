@@ -44,8 +44,10 @@ class Controller extends \Gcms\Controller
         $this->title .= ' '.$title;
         // เลือกเมนู
         $this->menu = 'report';
+        // สมาชิก
+        $login = Login::isMember();
         // สามารถอนุมัติได้
-        if (Login::checkPermission(Login::isMember(), 'can_approve_eleave')) {
+        if (Login::checkPermission($login, 'can_approve_eleave')) {
             // แสดงผล
             $section = Html::create('section', array(
                 'class' => 'content_bg',
@@ -64,7 +66,7 @@ class Controller extends \Gcms\Controller
             // menu
             $section->appendChild(\Index\Tabmenus\View::render($request, 'report', 'eleave'));
             // ตาราง
-            $section->appendChild(createClass('Eleave\Report\View')->render($request, $index));
+            $section->appendChild(createClass('Eleave\Report\View')->render($request, $index, $login));
             // คืนค่า HTML
 
             return $section->render();
